@@ -15,7 +15,10 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
-.idea
+# .idea is intentionally not ignored, because it genuinely has some useful files when opened in webstorm
+# the .idea has a .gitignore itself, which removes files that would change from developer to developer
+# but keeping .idea committed, means that things like running biome on save, are consistent for all developers
+#.idea
 .DS_Store
 *.suo
 *.ntvs*
