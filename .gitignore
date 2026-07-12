@@ -1,3 +1,6 @@
+# environment files that should not be presisted to git
+.env
+
 # Logs
 logs
 *.log
