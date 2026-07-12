@@ -1,5 +1,8 @@
 # Web Weather App by CocoX
 
+This project was originally started for a brief given by SecuritEase; the brief you can find in the docs folder named [notion-brief.md](docs/notion-brief.md).
+The content of the deliverable and what's "left" out is based on this brief and the amount of time that remains.
+
 A weather app built for the Senior Software Engineer (front-end role) technical assessment. It shows current conditions, a 3-day forecast, and 3-day history for a specified location, with day tiles that update the main display on click.
 
 The goal of this application is to be written within a week, while still working on normal day-to-day developer tasks.
