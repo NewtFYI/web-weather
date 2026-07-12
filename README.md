@@ -11,9 +11,6 @@ Items might be cut from the original deliverable, which is due EoD, July 15, 202
 
 1. Clone the repo and run `pnpm i` (or `npm install`, but `pnpm` is the recommended package manager).
 2. Copy `.env.example` to `.env` and add your WeatherAPI.com key:
-```
-VITE_WEATHER_API_KEY=your_key_here
-```
 3. `pnpm dev` starts the app at `http://localhost:2121`.
 4. `pnpm build` produces a production build in `dist/`.
 5. `pnpm test` runs the test suite.
