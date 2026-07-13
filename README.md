@@ -1,14 +1,15 @@
 # Web Weather App by CocoX
 
-This project was originally started for a brief given by SecuritEase; the brief you can find in the docs folder named [notion-brief.md](docs/notion-brief.md).
+This project was originally started from a brief given by SecuritEase; the brief can be found in the docs folder at [brief](docs/brief.md).
 The content of the deliverable and what's "left" out is based on this brief and the amount of time that remains.
 
-A weather app built for the Senior Software Engineer (front-end role) technical assessment. It shows current conditions, a 3-day forecast, and 3-day history for a specified location, with day tiles that update the main display on click.
+A weather app built for as part of a technical assessment.
+It shows current conditions, a 3-day forecast, and 3-day history for a specified location, with day tiles that update the main display on click.
 
 The goal of this application is to be written within a week, while still working on normal day-to-day developer tasks.
 Items might be cut from the original deliverable, which is due EoD, July 15, 2026.
 
-> This project may extend beyond this deadline, for a showcase on my personal projects which can be viewed at [newt.fyi](https://newt.fyi/projects).
+> This project may extend beyond this deadline, for a showcase on my personal projects which can be viewed at [newt.fyi/projects](https://newt.fyi/projects).
 
 ## Setup
 
@@ -22,15 +23,26 @@ Get a free key at [weatherapi.com](https://www.weatherapi.com/signup.aspx).
 
 ## Why WeatherAPI.com instead of WeatherStack
 
-The brief names WeatherStack's free tier as the data source, and asks for a 3-day forecast plus 3-day history alongside current conditions. Those two requirements do not fit on WeatherStack's free plan.
+The brief names WeatherStack's free tier as the data source,
+and asks for a 3-day forecast plus 3-day history alongside current conditions.
+Those two requirements do not fit on WeatherStack's free plan.
 
-WeatherStack's Free plan gives real-time weather only, capped at 100 calls a month. Forecast data sits behind the Professional plan at $49.99 a month. Historical data sits behind the Standard plan at $9.99 a month. (Source: [WeatherStack Pricing](https://weatherstack.com/pricing), checked July 2026)
+WeatherStack's Free plan gives real-time weather only, capped at 100 calls a month.
+Forecast data sits behind the Professional plan at \$49.99 a month.
+Historical data sits behind the Standard plan at \$9.99 a month.
+(Source: [WeatherStack Pricing](https://weatherstack.com/pricing), checked July 2026)
 
-Rather than pay for a plan or stitch together two providers for one app, I moved current weather, forecast, and history onto WeatherAPI.com. Its Free plan allows 100,000 calls a month, a 3-day forecast, 1 day of historical data, and permits commercial use. (Source: [WeatherAPI Pricing](https://www.weatherapi.com/pricing.aspx)) That's 1,000 times WeatherStack's free call allowance, from a single response shape instead of two.
+Rather than pay for a plan or stitch together two providers for one app,
+I moved current weather, forecast, and history onto WeatherAPI.com.
+Its Free plan allows 100,000 calls a month, a 3-day forecast, 1 day of historical data,
+and permits commercial use. (Source: [WeatherAPI Pricing](https://www.weatherapi.com/pricing.aspx))
+That's 1,000 times WeatherStack's free call allowance, from a single response shape instead of two.
 
 ## Covering the extra 2 days of history
 
-WeatherAPI.com's free plan returns 1 day of history. The brief asks for 3, and paying for WeatherStack's Standard plan or a second API just to cover 2 extra days didn't seem worth it. Instead, the app builds its own trailing history:
+WeatherAPI.com's free plan returns 1 day of history.
+The brief asks for 3, and paying for WeatherStack's Standard plan or a second API just to cover 2 extra days didn't seem feasible.
+Instead, the app builds its own trailing history:
 
 - Every time the app loads, it writes that day's current-weather reading to `IndexedDB`
    - Scope still needs defining on how this is stored
@@ -41,14 +53,21 @@ WeatherAPI.com's free plan returns 1 day of history. The brief asks for 3, and p
 
 ## Mock data for development
 
-100,000 calls a month is generous, but restarting the dev server or refreshing the browser while working on the UI adds up fast. For this reason, the app uses `mock-weather-data.json` (in the project root) which emulates the WeatherAPI.com's own response shape: `location`, `current`, `forecast.forecastday[]`.
+100,000 calls a month is generous, but restarting the dev server or refreshing the browser 
+while working on the UI adds up fast.
+For this reason, the app uses `mock-weather-data.json`
+(in the project root) which emulates the WeatherAPI.com's own response shape:
+`location`, `current`, `forecast.forecastday[]`.
 
 > ⚠️ 
 > The JSON file will contain history information in a structure that is defined once the app has been built and contains history information that is pulled from browser storage. 
 
 Set `VITE_USE_MOCK_DATA=true` in `.env` to load the fixture instead of calling the live API.
 
-Because the fixture matches the real response shape field for field, it also doubles as the schema for a possible future "load your own weather JSON" feature, letting someone see the app rendered with their own numbers instead of a live location. This is part of a stretch goal.
+Because the fixture matches the real response shape field for field,
+it also doubles as the schema for a possible future "load your own weather JSON" feature,
+letting someone see the app rendered with their own numbers instead of a live location.
+This is part of a stretch goal.
 
 ## Design decisions and trade-offs
 
@@ -71,7 +90,7 @@ Test runner and what's covered, will be provided in this section
 
 WeatherAPI.com asks free-plan users to link back to their service. This information can be found on their [docs](https://www.weatherapi.com/docs/)
 
-Appaches listed by them are provided here for quick reference:
+Approaches listed by them are provided here for quick reference:
 
 ```html
 Powered by <a href="https://www.weatherapi.com/" title="Free Weather API">WeatherAPI.com</a>

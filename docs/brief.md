@@ -1,6 +1,4 @@
-# SecuritEase: Senior Software Engineer (front-end) - Remote, South Africa
-
-## 2026-07; Assessment: Weather Application
+# Assessment: Weather Application
 
 ## Objective
 
@@ -51,7 +49,7 @@ Tests that validate the core features.
 
 ## Submission
 
-Upload the project to a public GitHub repository and share the link plus supporting documentation via Employment Hero, or send to [human.resources@securitease.com](mailto:human.resources@securitease.com).
+Upload the project to a public GitHub repository and share the link plus supporting documentation.
 
 ## Timeline
 
