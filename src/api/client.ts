@@ -1,4 +1,4 @@
-import type { ApiCurrent, FetchRequest } from "../types/api.ts";
+import type { ApiForecastResponse, FetchRequest } from "../types/api.ts";
 
 const API_BASE = "https://api.weatherapi.com/v1" as const;
 
@@ -24,6 +24,6 @@ async function fetchWithAuth<TResponse>(method: string, { queryParams }: FetchRe
 	return responseJson as TResponse;
 }
 
-export async function loadCurrent(request: FetchRequest): Promise<ApiCurrent> {
-	return fetchWithAuth<ApiCurrent>(ApiMethodMap.current, request);
+export async function loadCurrent(request: FetchRequest): Promise<ApiForecastResponse> {
+	return fetchWithAuth<ApiForecastResponse>(ApiMethodMap.current, request);
 }
