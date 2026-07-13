@@ -95,6 +95,8 @@ Test runner and what's covered, will be provided in this section
 
 ## Attribution
 
+### WeatherAPI
+
 WeatherAPI.com asks free-plan users to link back to their service. This information can be found on their [docs](https://www.weatherapi.com/docs/)
 
 Approaches listed by them are provided here for quick reference:
@@ -108,3 +110,17 @@ or
 ```html
 <a href="https://www.weatherapi.com/" title="Free Weather API"><img src='//cdn.weatherapi.com/v4/images/weatherapi_logo.png' alt="Weather data by WeatherAPI.com" border="0"></a>
 ```
+
+### Query String Builder
+
+There are a couple of options for building the query string that we use for the API queries.
+Because all the WeatherAPI queries are GET's we should have an easy way to handle query params.
+
+- I could use a package
+  - Adds unnecessary dep for such a small project
+- Write it manually by hand
+  - This could cause some pain
+- Use a simple function
+  - Someone was kind enough to post this on a [medium article](https://medium.com/suyeonme/crafting-query-strings-with-the-builder-pattern-in-typescript-2df8a8d8ff6e)
+
+I chose the last option since it was the simplest.
