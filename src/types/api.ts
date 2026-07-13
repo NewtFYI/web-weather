@@ -1,13 +1,11 @@
-export type ApiMethodMapType = {
-	current: string;
-	forecast: string;
-	search: string;
-	history: string;
-};
-
 export type FetchRequest = {
-	method: ApiMethodMapType;
-	queryParams: Record<string, unknown>;
+	queryParams: {
+		/**
+		 * the location:
+		 * Pass US Zipcode, UK Postcode, Canada Postalcode, IP address, Latitude/Longitude (decimal degree) or city name.
+		 */
+		q: string;
+	};
 };
 
 export type ApiBoolean = 0 | 1;
