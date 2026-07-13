@@ -1,3 +1,5 @@
+export type LoadingStatus = "loading" | "ready" | "error";
+
 export type FetchRequest = {
 	queryParams: {
 		/**
