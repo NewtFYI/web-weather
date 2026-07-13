@@ -40,16 +40,23 @@ That's 1,000 times WeatherStack's free call allowance, from a single response sh
 
 ## Covering the extra 2 days of history
 
-WeatherAPI.com's free plan returns 1 day of history.
-The brief asks for 3, and paying for WeatherStack's Standard plan or a second API just to cover 2 extra days didn't seem feasible.
-Instead, the app builds its own trailing history:
+> ⚠️ UPDATE
+> After exploring the API a little, I see that the WeatherAPI.com allows you to get history for any day
+> The pricing page was a little confusing/misleading with this; and I'm still not exactly sure what they meant by only getting a single day's history.
+> It's possible that you can only get a single day of history at a time - which is likely what that item on the pricing page means.
+> But, because we are able to get history for a day, but just calling the api for that specific day, we'll always have all 3 days showing correctly from the start.
+> The thing that doesn't change, is that we will continue to cache history weather, since it's in the past, it can't change.
 
-- Every time the app loads, it writes that day's current-weather reading to `IndexedDB`
-   - Scope still needs defining on how this is stored
-- Day -1 always comes from WeatherAPI.com's `history.json` endpoint, so it's accurate from the first run.
-- Day -2 and day -3 come from the local cache, once the app has been opened on those days.
-- On a first run, or after clearing site data, day -2 and day -3 show an explicit "no data yet" state rather than a blank tile or an invented number.
-   - This is a tradeoff, to prevent incurring costs on this project
+~~WeatherAPI.com's free plan returns 1 day of history.
+The brief asks for 3, and paying for WeatherStack's Standard plan or a second API just to cover 2 extra days didn't seem feasible.
+Instead, the app builds its own trailing history:~~
+
+~~- Every time the app loads, it writes that day's current-weather reading to `IndexedDB`~~
+   ~~- Scope still needs defining on how this is stored~~
+~~- Day -1 always comes from WeatherAPI.com's `history.json` endpoint, so it's accurate from the first run.~~
+~~- Day -2 and day -3 come from the local cache, once the app has been opened on those days.~~
+~~- On a first run, or after clearing site data, day -2 and day -3 show an explicit "no data yet" state rather than a blank tile or an invented number.~~
+   ~~- This is a tradeoff, to prevent incurring costs on this project~~
 
 ## Mock data for development
 
