@@ -1,3 +1,17 @@
+import { QueryStringBuilder } from "../lib/query-string-builder.ts";
+
+export type ApiMethodMapType = {
+	current: string;
+	forecast: string;
+	search: string;
+	history: string;
+};
+
+export type FetchRequest = {
+	method: ApiMethodMapType;
+	queryString: QueryStringBuilder;
+};
+
 export type ApiBoolean = 0 | 1;
 
 export type ApiCondition = {
