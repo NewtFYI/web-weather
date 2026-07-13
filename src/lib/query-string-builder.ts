@@ -1,18 +1,16 @@
 export class QueryStringBuilder {
-	private queryString: string;
+	private query: Map<string, string>;
 
 	constructor() {
-		this.queryString = "";
+		this.query = new Map<string, string>();
 	}
 
 	addQueryString(key: string, value: string): void {
-		if (this.queryString !== "") {
-			this.queryString += "&";
-		}
-		this.queryString += `${key}=${encodeURIComponent(value)}`;
+		this.query.set(key, value);
 	}
 
 	build(): string {
-		return `${this.queryString}`;
+		const mapArray = Array.from(this.query.entries());
+		return mapArray.map(([key, value]) => `${key}=${value}`).join("&");
 	}
 }
