@@ -9,9 +9,9 @@ export const ApiMethodMap: ApiMethodMapType = {
 	history: "history.json",
 } as const;
 
-async function fetchWithAuth<TResponse>({ method, queryString }: FetchRequest): Promise<TResponse> {
-	queryString.addQueryString("key", import.meta.env.VITE_WEATHER_API_KEY);
-	const response = await fetch(`${API_BASE}/${method}?${queryString.build()}`);
+export async function fetchWithAuth<TResponse>({ method, queryParams }: FetchRequest): Promise<TResponse> {
+	const queryString = new URLSearchParams({ key: import.meta.env.VITE_WEATHER_API_KEY ?? "", ...queryParams });
+	const response = await fetch(`${API_BASE}/${method}?${queryString}`);
 
 	if (!response.ok) {
 		if (response.status === 401) {
