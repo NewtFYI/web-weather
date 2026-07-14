@@ -20,6 +20,7 @@ import {
 import type { WeatherCity, WeatherDay, WeatherForecastData } from "../types/weather.ts";
 
 const API_BASE = "https://api.weatherapi.com/v1" as const;
+const useMock = import.meta.env.VITE_USE_MOCK_DATA === "true";
 
 const HISTORY_DAYS = 3 as const;
 const FORECAST_DAYS = 4 as const;
@@ -54,7 +55,6 @@ function fetchLocalData<TResponse>(method: ApiMethod, { q, dt }: ApiQueryRequest
 }
 
 async function fetchWithAuth<TResponse>(method: ApiMethod, request: ApiQueryRequest): Promise<TResponse> {
-	const useMock = import.meta.env.VITE_IS_DEVELOPMENT === "true";
 	if (useMock) {
 		return fetchLocalData<TResponse>(method, request);
 	}
