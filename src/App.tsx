@@ -74,7 +74,7 @@ function App() {
 		}
 	}, [data]);
 
-	if (data) {
+	if (!data) {
 		return <LoadingRetry retry={refresh} status={status} error={error} />;
 	}
 

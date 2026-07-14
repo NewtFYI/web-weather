@@ -8,10 +8,10 @@ export function useWeather(location: string) {
 	const [refreshMarker, setRefreshMarker] = useState(0);
 
 	useEffect(() => {
-		if (refreshMarker < 0) {
+		let alive = true;
+		if (refreshMarker < 0 || !alive) {
 			return;
 		}
-		let alive = true;
 		setState(() => ({ status: "loading" }));
 		loadCurrent({
 			queryParams: {
@@ -20,9 +20,15 @@ export function useWeather(location: string) {
 		})
 			// TODO consider async await
 			.then((data) => {
-				if (alive) {
-					setState({ status: "ready", data: mapWeatherForecast(data) });
-				}
+				setTimeout(() => {
+					if (alive) {
+						if (refreshMarker > 1) {
+							setState({ status: "ready", data: mapWeatherForecast(data) });
+						} else {
+							setState({ status: "error", error: "Unauthorized" });
+						}
+					}
+				}, 2000);
 			})
 			.catch((err: unknown) => {
 				if (alive) {
