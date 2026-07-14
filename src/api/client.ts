@@ -1,5 +1,8 @@
 import localCurrentData from "../mock/jhb/current-mock.json";
-import type { ApiForecastResponse, FetchRequest } from "../types/api.ts";
+import localCityData from "../mock/search/cities.json";
+import type { ApiForecastResponse, ApiSearchCityResult, FetchRequest } from "../types/api.ts";
+import type { WeatherCity, WeatherData } from "../types/weather.ts";
+import { mapWeatherCity, mapWeatherForecast } from "../utils/mapping.ts";
 
 const API_BASE = "https://api.weatherapi.com/v1" as const;
 
@@ -10,19 +13,23 @@ const ApiMethodMap = {
 	history: "history.json",
 } as const;
 
-function fetchLocalData<TResponse>(method: string): TResponse {
+function fetchLocalData<TResponse>(method: string, { queryParams }: FetchRequest): TResponse {
 	if (method === ApiMethodMap.current) {
 		return localCurrentData as TResponse;
+	}
+	if (method === ApiMethodMap.search) {
+		return localCityData.filter((city) => city.name.toLowerCase().includes(queryParams.q.toLowerCase())).slice(0, 5) as TResponse;
 	}
 
 	return null as TResponse;
 }
 
-async function fetchWithAuth<TResponse>(method: string, { queryParams }: FetchRequest): Promise<TResponse> {
+async function fetchWithAuth<TResponse>(method: string, request: FetchRequest): Promise<TResponse> {
+	const { queryParams } = request;
 	// check if we should hit the actual API
 	const isProd = import.meta.env.VITE_IS_DEVELOPMENT !== "true";
 	if (!isProd) {
-		return fetchLocalData<TResponse>(method);
+		return fetchLocalData<TResponse>(method, request);
 	}
 
 	const queryString = new URLSearchParams({ key: import.meta.env.VITE_WEATHER_API_KEY ?? "", ...queryParams });
@@ -39,6 +46,13 @@ async function fetchWithAuth<TResponse>(method: string, { queryParams }: FetchRe
 	return responseJson as TResponse;
 }
 
-export async function loadCurrent(request: FetchRequest): Promise<ApiForecastResponse> {
-	return fetchWithAuth<ApiForecastResponse>(ApiMethodMap.current, request);
+export async function loadCurrent(request: FetchRequest): Promise<WeatherData> {
+	const apiResult = await fetchWithAuth<ApiForecastResponse>(ApiMethodMap.current, request);
+	await new Promise((resolve) => setTimeout(resolve, 2000));
+	return mapWeatherForecast(apiResult);
+}
+
+export async function searchCity(request: FetchRequest): Promise<WeatherCity[]> {
+	const apiResult = await fetchWithAuth<ApiSearchCityResult[]>(ApiMethodMap.search, request);
+	return apiResult.map((city) => mapWeatherCity(city));
 }
