@@ -1,6 +1,6 @@
-import type { TempUnit, WeatherDay } from "../types/weather.ts";
-import { tempStr } from "../utils/format.ts";
-import SegmentToggle from "./SegmentToggle.tsx";
+import type { TempUnit, WeatherDay } from "../../types/weather.ts";
+import { tempStr } from "../../utils/format.ts";
+import SegmentToggle from "../SegmentToggle/SegmentToggle.tsx";
 
 type HeroProps = {
 	day: WeatherDay;

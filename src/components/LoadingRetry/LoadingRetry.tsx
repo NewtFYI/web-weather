@@ -1,4 +1,4 @@
-import type { LoadingStatus } from "../types/api.ts";
+import type { LoadingStatus } from "../../types/api.ts";
 
 function LoadingRetry({
 	status,
