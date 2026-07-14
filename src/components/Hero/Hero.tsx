@@ -16,8 +16,7 @@ function Hero({ day, unit, onUnitChange }: HeroProps) {
 					<Temperature value={day.heroTemp} display="value" />
 				</div>
 				<SegmentToggle
-					className="mt-4"
-					label="Temperature units"
+					ariaLabel="Temperature units"
 					value={unit}
 					onChange={onUnitChange}
 					key={unit}

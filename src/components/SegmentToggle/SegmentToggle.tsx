@@ -10,14 +10,15 @@ type SegmentedProps<T extends string> = {
 	value: T;
 	onChange: (value: T) => void;
 	ariaLabel: string;
+	className?: string;
 };
 
-function SegmentToggle<T extends string>({ options, value, onChange, ariaLabel }: SegmentedProps<T>) {
+function SegmentToggle<T extends string>({ options, value, onChange, ariaLabel, className }: SegmentedProps<T>) {
 	return (
 		<div
 			role="tablist"
 			aria-label={ariaLabel}
-			className="flex w-fit gap-0.5 rounded-full border border-glass-line bg-glass p-1 backdrop-blur-sm"
+			className={`flex w-fit gap-0.5 rounded-full border border-glass-line bg-glass p-1 backdrop-blur-sm ${className || ""}`}
 		>
 			{options.map((o) => (
 				<button
