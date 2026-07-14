@@ -6,26 +6,21 @@ export function useWeather(location: string) {
 	const [state, setState] = useState<WeatherState>({ status: "loading" });
 	const [refreshMarker, setRefreshMarker] = useState(0);
 
+	// biome-ignore lint/correctness/useExhaustiveDependencies: refreshMarker is used to determine if we should hit the api again, it's an external managed update
 	useEffect(() => {
 		let alive = true;
-		if (refreshMarker < 0 || !alive) {
-			return;
-		}
-		setState(() => ({ status: "loading" }));
-		loadForecast({
-			queryParams: {
-				q: location,
-			},
-		})
-			// TODO consider async await
+		setState({ status: "loading" });
+
+		loadForecast({ queryParams: { q: location } })
 			.then((data) => {
-				setState({ status: "ready", data });
+				if (alive) setState({ status: "ready", data });
 			})
 			.catch((err: unknown) => {
 				if (alive) {
 					setState({ status: "error", error: err instanceof Error ? err.message : String(err) });
 				}
 			});
+
 		return () => {
 			alive = false;
 		};

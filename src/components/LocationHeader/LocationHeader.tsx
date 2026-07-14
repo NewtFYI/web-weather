@@ -4,18 +4,17 @@ import Separator from "../Separator/Separator.tsx";
 
 type LocationHeaderProps = {
 	location: WeatherLocation;
-	// TODO - need to clean this logic up to get the current tile's date
-	current?: WeatherDay | undefined;
+	day: WeatherDay;
 	onCitySelected: (city: WeatherCity) => void;
 };
 
-export function LocationHeader({ location, onCitySelected, current }: LocationHeaderProps) {
+export function LocationHeader({ location, onCitySelected, day }: LocationHeaderProps) {
 	return (
 		<header>
 			<div>
 				<h1 className="text-4xl font-bold text-slate-100">{location.name}</h1>
 				<p className="mt-1 text-base text-slate-400">
-					{location.region} <Separator /> {current?.dateLabel ?? "No day"}
+					{location.region} <Separator /> {day.date ?? "No day"}
 				</p>
 				<CitySearch onSelect={onCitySelected} />
 			</div>

@@ -1,11 +1,9 @@
-import type { LoadingStatus } from "../../types/api.ts";
-
 function LoadingRetry({
 	status,
 	retry: refresh,
 	error,
 }: {
-	status: LoadingStatus;
+	status: "loading" | "error";
 	error: string | undefined;
 	retry: () => void | Promise<void>;
 }) {

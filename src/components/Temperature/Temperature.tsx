@@ -1,28 +1,31 @@
 import "./Temperature.css";
-import type { TempUnit } from "../../types/weather.ts";
+import type { Temp, TempUnit } from "../../types/weather.ts";
 
 type TemperatureProps = {
-	value?: number | string;
+	value?: Temp;
 	display: "value" | "value-degree" | "degree-unit";
-	unit?: TempUnit;
+	unit: TempUnit;
 };
 
 function Temperature({ value, display, unit }: TemperatureProps) {
+	// picked up that it returns decimals, like 8.8 -> while helpful, I don't think people see weather temp's in that way
+	const tempReading = value ? Math.round(unit === "C" ? value.c : value.f) : 0;
+
 	switch (display) {
 		case "value":
-			return <span>{value ?? 0}</span>;
+			return <span>{tempReading}</span>;
 		case "value-degree":
 			return (
 				<span>
-					{value ?? 0}
-					<span className="degree"></span>
+					{tempReading}
+					<span className="degree" />
 				</span>
 			);
 		case "degree-unit":
 			return (
 				<span>
-					<span className="degree"></span>
-					{unit ?? "C"}
+					<span className="degree" />
+					{unit}
 				</span>
 			);
 	}

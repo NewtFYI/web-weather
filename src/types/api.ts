@@ -1,5 +1,3 @@
-export type LoadingStatus = "loading" | "ready" | "error";
-
 export type FetchRequest = {
 	queryParams: {
 		/**
@@ -38,6 +36,7 @@ export type ApiLocation = {
 };
 
 export type ApiCurrent = {
+	last_updated_epoch: number;
 	temp_c: number;
 	feelslike_c: number;
 	temp_f: number;
@@ -51,6 +50,8 @@ export type ApiCurrent = {
 	 */
 	is_day: ApiBoolean;
 	condition: ApiCondition;
+	chance_of_rain: number;
+	will_it_rain: ApiBoolean;
 	wind_kph: number;
 	humidity: number;
 };
@@ -73,7 +74,9 @@ export type ApiHour = {
 	time: string;
 	time_epoch: number;
 	temp_c: number;
+	feelslike_c: number;
 	temp_f: number;
+	feelslike_f: number;
 	is_day: ApiBoolean;
 	condition: ApiCondition;
 	wind_kph: number;

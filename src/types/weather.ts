@@ -1,50 +1,52 @@
-import type { LoadingStatus } from "./api.ts";
-
 export type TempUnit = "C" | "F";
+export type Temp = { c: number; f: number };
 
-export type WeatherState = {
-	status: LoadingStatus;
-	data?: WeatherForecastData;
-	error?: string;
+export type WeatherState = { status: "loading" } | { status: "ready"; data: WeatherForecastData } | { status: "error"; error?: string };
+
+export type WeatherCondition = {
+	text: string;
+	code: number;
+	iconUrl: string;
 };
 
-export type WeatherCurrentData = {
-	current: WeatherDay;
-	location: WeatherLocation;
-};
-
-export type WeatherForecastData = WeatherCurrentData & {
-	forecast: WeatherForecast;
-};
-
-export type WeatherForecast = {
+export type WeatherReading = {
 	epoch: number;
-	day: WeatherDay;
-	hours: WeatherHour[];
-};
-
-export type WeatherHour = {
-	epoch: number;
-	temp: number;
+	temp: Temp;
+	feelsLike: Temp;
 	isDay: boolean;
-	rainIs: boolean;
+	condition: WeatherCondition;
 	rainChance: number;
+	rainWill: boolean;
+};
+
+export type WeatherDaySummary = {
+	min: Temp;
+	max: Temp;
+	condition: WeatherCondition;
+	rainChance: number;
+	rainWill: boolean;
 };
 
 export type WeatherDay = {
-	heroTemp: number;
-	feelsLike: number;
-	isDay: boolean;
-	min: number;
-	max: number;
-	conditionText: string;
-	dateLabel?: string;
+	epoch: number;
+	/**
+	 * Stored as YYYY-MM-DD
+	 */
+	date: string;
+	summary: WeatherDaySummary;
+	hours: WeatherReading[];
 };
 
 export type WeatherLocation = {
 	name: string;
 	region: string;
 	timezoneId: string;
+};
+
+export type WeatherForecastData = {
+	location: WeatherLocation;
+	current: WeatherReading;
+	days: WeatherDay[];
 };
 
 export type WeatherCity = {
