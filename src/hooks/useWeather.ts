@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState } from "react";
-import { loadCurrent } from "../api/client.ts";
+import { loadForecast } from "../api/client.ts";
 import type { WeatherState } from "../types/weather.ts";
 
 export function useWeather(location: string) {
@@ -12,7 +12,7 @@ export function useWeather(location: string) {
 			return;
 		}
 		setState(() => ({ status: "loading" }));
-		loadCurrent({
+		loadForecast({
 			queryParams: {
 				q: location,
 			},

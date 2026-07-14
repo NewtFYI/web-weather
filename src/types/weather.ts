@@ -4,13 +4,31 @@ export type TempUnit = "C" | "F";
 
 export type WeatherState = {
 	status: LoadingStatus;
-	data?: WeatherData;
+	data?: WeatherForecastData;
 	error?: string;
 };
 
-export type WeatherData = {
+export type WeatherCurrentData = {
 	current: WeatherDay;
 	location: WeatherLocation;
+};
+
+export type WeatherForecastData = WeatherCurrentData & {
+	forecast: WeatherForecast;
+};
+
+export type WeatherForecast = {
+	epoch: number;
+	day: WeatherDay;
+	hours: WeatherHour[];
+};
+
+export type WeatherHour = {
+	epoch: number;
+	temp: number;
+	isDay: boolean;
+	rainIs: boolean;
+	rainChance: number;
 };
 
 export type WeatherDay = {
@@ -20,6 +38,7 @@ export type WeatherDay = {
 	min: number;
 	max: number;
 	conditionText: string;
+	dateLabel?: string;
 };
 
 export type WeatherLocation = {

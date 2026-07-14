@@ -71,6 +71,7 @@ export type ApiHour = {
 	 * Formatted as YYYY-MM-DD HH:mm
 	 */
 	time: string;
+	time_epoch: number;
 	temp_c: number;
 	temp_f: number;
 	is_day: ApiBoolean;
@@ -110,6 +111,7 @@ export type ApiForecastDay = {
 	 * Formatted as YYYY-MM-DD
 	 */
 	date: string;
+	date_epoch: number;
 	day: ApiDay;
 	astro: ApiAstro;
 	hour: ApiHour[];

@@ -1,8 +1,9 @@
 import localCurrentData from "../mock/jhb/current-mock.json";
+import localForecastData from "../mock/jhb/forecast.json";
 import localCityData from "../mock/search/cities.json";
 import type { ApiForecastResponse, ApiSearchCityResult, FetchRequest } from "../types/api.ts";
-import type { WeatherCity, WeatherData } from "../types/weather.ts";
-import { mapWeatherCity, mapWeatherForecast } from "../utils/mapping.ts";
+import type { WeatherCity, WeatherCurrentData, WeatherForecastData } from "../types/weather.ts";
+import { mapWeatherCity, mapWeatherCurrent, mapWeatherForecast } from "../utils/mapping.ts";
 
 const API_BASE = "https://api.weatherapi.com/v1" as const;
 
@@ -19,6 +20,9 @@ function fetchLocalData<TResponse>(method: string, { queryParams }: FetchRequest
 	}
 	if (method === ApiMethodMap.search) {
 		return localCityData.filter((city) => city.name.toLowerCase().includes(queryParams.q.toLowerCase())).slice(0, 5) as TResponse;
+	}
+	if (method === ApiMethodMap.forecast) {
+		return localForecastData as TResponse;
 	}
 
 	return null as TResponse;
@@ -46,9 +50,14 @@ async function fetchWithAuth<TResponse>(method: string, request: FetchRequest): 
 	return responseJson as TResponse;
 }
 
-export async function loadCurrent(request: FetchRequest): Promise<WeatherData> {
+export async function loadCurrent(request: FetchRequest): Promise<WeatherCurrentData> {
 	const apiResult = await fetchWithAuth<ApiForecastResponse>(ApiMethodMap.current, request);
 	await new Promise((resolve) => setTimeout(resolve, 2000));
+	return mapWeatherCurrent(apiResult);
+}
+
+export async function loadForecast(request: FetchRequest): Promise<WeatherForecastData> {
+	const apiResult = await fetchWithAuth<ApiForecastResponse>(ApiMethodMap.forecast, request);
 	return mapWeatherForecast(apiResult);
 }
 
