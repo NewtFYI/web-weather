@@ -7,3 +7,10 @@ export type WeatherState = {
 	data?: ApiForecastResponse;
 	error?: string;
 };
+
+export type WeatherDay = {
+	heroTemp: number;
+	min: number;
+	max: number;
+	conditionText: string;
+};
