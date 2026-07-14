@@ -11,7 +11,7 @@ export function useWeather(location: string) {
 		let alive = true;
 		setState({ status: "loading" });
 
-		loadForecast({ queryParams: { q: location } })
+		loadForecast({ locationSearch: location })
 			.then((data) => {
 				if (alive) setState({ status: "ready", data });
 			})

@@ -30,11 +30,7 @@ export function CitySearch({ onSelect }: { onSelect: (city: WeatherCity) => void
 			return;
 		}
 		const t = setTimeout(() => {
-			searchCity({
-				queryParams: {
-					q: searchValue,
-				},
-			})
+			searchCity({ locationSearch: searchValue })
 				.then(setItems)
 				.catch(() => {
 					// keep previous items if api fails

@@ -1,12 +1,56 @@
-export type FetchRequest = {
-	queryParams: {
-		/**
-		 * the location:
-		 * Pass US Zipcode, UK Postcode, Canada Postalcode, IP address, Latitude/Longitude (decimal degree) or city name.
-		 */
-		q: string;
-	};
+export type BaseFetchRequest = {
+	locationSearch: string;
 };
+
+export type ForecastFetchRequest = BaseFetchRequest & {
+	forecastDays?: number;
+};
+
+export type HistoryFetchRequest = BaseFetchRequest & {
+	historyDate?: string;
+};
+
+export type ApiQueryRequest = {
+	/**
+	 * Used in all endpoints, as the search location:
+	 * Pass US Zipcode, UK Postcode, Canada Postal code,
+	 * IP address, Latitude/Longitude (decimal degree) or city name.
+	 */
+	q: string;
+	/**
+	 * Used for the forecast endpoint;
+	 * The number of days to include in the forecast.
+	 * Use 1 for today's forecast
+	 */
+	dt?: string;
+	/**
+	 * Used for the history endpoint;
+	 * Formatted YYYY-MM-DD.
+	 * Free tier permits a single day per request, so we can't use this combined with `end_dt` for a range;
+	 * multiple calls need to be made, but we'll do some nice caching
+	 */
+	days?: string;
+};
+
+export function mapBaseFetchToApiQuery(request: BaseFetchRequest): ApiQueryRequest {
+	return {
+		q: request.locationSearch,
+	};
+}
+
+export function mapFetchToApiQuery(request: ForecastFetchRequest): ApiQueryRequest {
+	return {
+		...mapBaseFetchToApiQuery(request),
+		days: String(request.forecastDays),
+	};
+}
+
+export function mapHistoryFetchToApiQuery(request: HistoryFetchRequest): ApiQueryRequest {
+	return {
+		...mapBaseFetchToApiQuery(request),
+		dt: request.historyDate,
+	};
+}
 
 export type ApiBoolean = 0 | 1;
 
