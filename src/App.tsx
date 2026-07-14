@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Hero from "./components/Hero/Hero.tsx";
+import LoadingRetry from "./components/LoadingRetry/LoadingRetry.tsx";
 import { LocationHeader } from "./components/LocationHeader/LocationHeader.tsx";
 import { useWeather } from "./hooks/useWeather.ts";
 import type { TempUnit, WeatherDay, WeatherLocation } from "./types/weather.ts";
@@ -73,11 +74,10 @@ function App() {
 		}
 	}, [data]);
 
-	// if (!data) {
-	// 	return <LoadingRetry retry={refresh} status={status} error={error} />;
-	// }
+	if (data) {
+		return <LoadingRetry retry={refresh} status={status} error={error} />;
+	}
 
-	// TODO - remove main-container or add styling
 	return (
 		<div className="relative mx-auto flex min-h-screen max-w-270 flex-col pt-10 pb-10">
 			<LocationHeader
