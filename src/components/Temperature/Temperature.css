@@ -1,0 +1,11 @@
+.degree {
+	display: inline-block;
+	width: 0.35em;
+	height: 0.35em;
+	margin-left: 0.05em;
+
+	border: 0.06em solid currentColor;
+	border-radius: 50%;
+
+	vertical-align: super;
+}
