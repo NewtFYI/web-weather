@@ -1,4 +1,4 @@
-function LoadingRetry({
+export function LoadingRetry({
 	status,
 	retry: refresh,
 	error,
@@ -26,5 +26,3 @@ function LoadingRetry({
 		</div>
 	);
 }
-
-export default LoadingRetry;

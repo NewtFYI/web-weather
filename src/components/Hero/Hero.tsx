@@ -1,6 +1,6 @@
 import type { TempUnit, WeatherDay, WeatherReading } from "../../types/weather.ts";
-import SegmentToggle from "../SegmentToggle/SegmentToggle.tsx";
-import Temperature from "../Temperature/Temperature.tsx";
+import { SegmentToggle } from "../SegmentToggle/SegmentToggle.tsx";
+import { Temperature } from "../Temperature/Temperature.tsx";
 
 type HeroProps = {
 	day: WeatherDay;
@@ -9,7 +9,7 @@ type HeroProps = {
 	onUnitChange: (unit: TempUnit) => void;
 };
 
-function Hero({ day, current, unit, onUnitChange }: HeroProps) {
+export function Hero({ day, current, unit, onUnitChange }: HeroProps) {
 	return (
 		<section className="flex flex-wrap items-start gap-4">
 			<div>
@@ -55,5 +55,3 @@ function Hero({ day, current, unit, onUnitChange }: HeroProps) {
 		</section>
 	);
 }
-
-export default Hero;

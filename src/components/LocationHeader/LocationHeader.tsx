@@ -1,6 +1,6 @@
 import type { WeatherCity, WeatherDay, WeatherLocation } from "../../types/weather.ts";
 import { CitySearch } from "../CitySearch/CitySearch.tsx";
-import Separator from "../Separator/Separator.tsx";
+import { Separator } from "../Separator/Separator.tsx";
 
 type LocationHeaderProps = {
 	location: WeatherLocation;

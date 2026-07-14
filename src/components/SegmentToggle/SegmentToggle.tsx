@@ -13,7 +13,7 @@ type SegmentedProps<T extends string> = {
 	className?: string;
 };
 
-function SegmentToggle<T extends string>({ options, value, onChange, ariaLabel, className }: SegmentedProps<T>) {
+export function SegmentToggle<T extends string>({ options, value, onChange, ariaLabel, className }: SegmentedProps<T>) {
 	return (
 		<div
 			role="tablist"
@@ -38,5 +38,3 @@ function SegmentToggle<T extends string>({ options, value, onChange, ariaLabel, 
 		</div>
 	);
 }
-
-export default SegmentToggle;

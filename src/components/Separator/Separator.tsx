@@ -1,7 +1,5 @@
 import "./Separator.css";
 
-function Separator() {
+export function Separator() {
 	return <span className="separator" aria-hidden="true" />;
 }
-
-export default Separator;

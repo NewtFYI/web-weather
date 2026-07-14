@@ -1,11 +1,11 @@
 import { useState } from "react";
-import Hero from "./components/Hero/Hero.tsx";
-import LoadingRetry from "./components/LoadingRetry/LoadingRetry.tsx";
+import { Hero } from "./components/Hero/Hero.tsx";
+import { LoadingRetry } from "./components/LoadingRetry/LoadingRetry.tsx";
 import { LocationHeader } from "./components/LocationHeader/LocationHeader.tsx";
 import { useWeather } from "./hooks/useWeather.ts";
 import type { TempUnit, WeatherCity } from "./types/weather.ts";
 
-function App() {
+export function App() {
 	const [weatherSearch, setWeatherSearch] = useState("Johannesburg");
 	const [selectedUnit, setSelectedUnit] = useState<TempUnit>("C");
 	const weather = useWeather(weatherSearch);
@@ -43,5 +43,3 @@ function App() {
 		</div>
 	);
 }
-
-export default App;

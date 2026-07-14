@@ -50,7 +50,8 @@
 			"style": {
 				"noNonNullAssertion": "warn",
 				"useConst": "error",
-				"useImportType": "off"
+				"useImportType": "off",
+				"useComponentExportOnlyModules": "error"
 			},
 			"suspicious": {
 				"noExplicitAny": "warn",

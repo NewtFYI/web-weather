@@ -3,7 +3,7 @@ import { CornerDownLeft, Search } from "lucide-react";
 import { type ReactNode, useEffect, useState } from "react";
 import { searchCity } from "../../api/client.ts";
 import type { WeatherCity } from "../../types/weather.ts";
-import Separator from "../Separator/Separator.tsx";
+import { Separator } from "../Separator/Separator.tsx";
 
 function highlightMatch(name: string, search: string): ReactNode {
 	const needle = search.trim().toLowerCase();
