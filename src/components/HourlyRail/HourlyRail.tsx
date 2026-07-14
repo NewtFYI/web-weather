@@ -31,8 +31,8 @@ export function HourlyRail({ day, unit, isToday }: HourlyRailProps) {
 			{day.hours.map((h) => {
 				// TODO fix this logic, it's a far too precise, I need to calculate the actual hour not just use the epoch time
 				// TODO replace the values with actual time, this is just to check that the scrolling is working
-				const isNow = isToday && h.epoch === 1783944000;
-				const isPast = isToday && h.epoch < 1783944000;
+				const isNow = isToday && h.epoch === 1784113200;
+				const isPast = isToday && h.epoch < 1784113200;
 				return (
 					<div
 						key={h.epoch}
