@@ -72,6 +72,7 @@ export type ApiHour = {
 	 * Formatted as YYYY-MM-DD HH:mm
 	 */
 	time: string;
+	hour: number;
 	time_epoch: number;
 	temp_c: number;
 	feelslike_c: number;

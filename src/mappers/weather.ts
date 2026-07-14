@@ -24,6 +24,7 @@ function mapLocation({ name, region, tz_id }: ApiLocation): WeatherLocation {
 function mapCurrent(current: ApiCurrent): WeatherReading {
 	return {
 		epoch: current.last_updated_epoch,
+		time: current.last_updated,
 		temp: mapTemp(current.temp_c, current.temp_f),
 		feelsLike: mapTemp(current.feelslike_c, current.feelslike_f),
 		isDay: current.is_day === 1,
@@ -36,6 +37,7 @@ function mapCurrent(current: ApiCurrent): WeatherReading {
 function mapHour(hour: ApiHour): WeatherReading {
 	return {
 		epoch: hour.time_epoch,
+		time: hour.time,
 		temp: mapTemp(hour.temp_c, hour.temp_f),
 		feelsLike: mapTemp(hour.feelslike_c, hour.feelslike_f),
 		isDay: hour.is_day === 1,

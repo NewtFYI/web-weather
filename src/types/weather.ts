@@ -11,6 +11,7 @@ export type WeatherCondition = {
 
 export type WeatherReading = {
 	epoch: number;
+	time: string;
 	temp: Temp;
 	feelsLike: Temp;
 	isDay: boolean;

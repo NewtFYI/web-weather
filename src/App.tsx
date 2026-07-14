@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { Hero } from "./components/Hero/Hero.tsx";
+import { HourlyRail } from "./components/HourlyRail/HourlyRail.tsx";
 import { LoadingRetry } from "./components/LoadingRetry/LoadingRetry.tsx";
 import { LocationHeader } from "./components/LocationHeader/LocationHeader.tsx";
 import { useWeather } from "./hooks/useWeather.ts";
@@ -25,15 +26,7 @@ export function App() {
 		<div className="relative mx-auto flex min-h-screen max-w-270 flex-col pt-10 pb-10">
 			<LocationHeader location={location} day={days[0]} onCitySelected={onSelectCity} />
 			<Hero day={days[0]} current={current} unit={selectedUnit} onUnitChange={(unit) => setSelectedUnit(unit)} />
-			<ul>
-				{days[0].hours.map((hour) => {
-					return (
-						<div key={hour.epoch}>
-							<div>{hour.epoch}</div>
-						</div>
-					);
-				})}
-			</ul>
+			<HourlyRail day={days[0]} unit={selectedUnit} isToday={true} />
 			<footer className="mt-auto flex items-center gap-1 pt-2 text-xs text-slate-500">
 				Powered by{" "}
 				<a href="https://www.weatherapi.com/" title="Free Weather API">
