@@ -24,9 +24,9 @@ export function App() {
 
 	return (
 		<div className="relative mx-auto flex min-h-screen max-w-270 flex-col pt-10 pb-10">
-			<LocationHeader location={location} day={days[0]} onCitySelected={onSelectCity} />
-			<Hero day={days[0]} current={current} unit={selectedUnit} onUnitChange={(unit) => setSelectedUnit(unit)} />
-			<HourlyRail day={days[0]} unit={selectedUnit} isToday={true} />
+			<LocationHeader location={location} day={days[3]} onCitySelected={onSelectCity} />
+			<Hero day={days[3]} current={current} unit={selectedUnit} onUnitChange={(unit) => setSelectedUnit(unit)} />
+			<HourlyRail day={days[3]} unit={selectedUnit} isToday={true} />
 			<footer className="mt-auto flex items-center gap-1 pt-2 text-xs text-slate-500">
 				Powered by{" "}
 				<a href="https://www.weatherapi.com/" title="Free Weather API">
