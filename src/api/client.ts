@@ -101,14 +101,26 @@ export async function loadForecast(request: ForecastFetchRequest): Promise<Weath
 		return forecast;
 	}
 
-	const settled = await Promise.allSettled(
-		previousDates(today, HISTORY_DAYS).map((date) =>
-			fetchHistoryDay({
-				locationSearch: request.locationSearch,
-				historyDate: date,
-			}),
-		),
-	);
+	let settled: PromiseSettledResult<WeatherDay[]>[];
+	if (useMock) {
+		settled = await Promise.allSettled(
+			previousDates("2026-07-13", HISTORY_DAYS).map((date) =>
+				fetchHistoryDay({
+					locationSearch: request.locationSearch,
+					historyDate: date,
+				}),
+			),
+		);
+	} else {
+		settled = await Promise.allSettled(
+			previousDates(today, HISTORY_DAYS).map((date) =>
+				fetchHistoryDay({
+					locationSearch: request.locationSearch,
+					historyDate: date,
+				}),
+			),
+		);
+	}
 
 	const history = settled
 		.filter((promiseResult): promiseResult is PromiseFulfilledResult<WeatherDay[]> => promiseResult.status === "fulfilled")
