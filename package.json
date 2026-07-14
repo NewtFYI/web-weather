@@ -11,6 +11,8 @@
 		"preview": "vite preview"
 	},
 	"dependencies": {
+		"downshift": "^9.4.0",
+		"lucide-react": "^1.24.0",
 		"react": "^19.2.7",
 		"react-dom": "^19.2.7"
 	},

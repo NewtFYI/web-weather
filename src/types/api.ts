@@ -115,7 +115,6 @@ export type ApiForecastDay = {
 	hour: ApiHour[];
 };
 
-/** One row of search.json */
 export type ApiSearchCityResult = {
 	id: number;
 	name: string;

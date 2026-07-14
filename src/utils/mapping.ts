@@ -1,5 +1,5 @@
-import type { ApiForecastResponse } from "../types/api.ts";
-import type { WeatherData } from "../types/weather.ts";
+import type { ApiForecastResponse, ApiSearchCityResult } from "../types/api.ts";
+import type { WeatherCity, WeatherData } from "../types/weather.ts";
 
 export function mapWeatherForecast({ current, location }: ApiForecastResponse): WeatherData {
 	return {
@@ -16,5 +16,14 @@ export function mapWeatherForecast({ current, location }: ApiForecastResponse): 
 			region: location.region,
 			timezoneId: location.tz_id,
 		},
+	};
+}
+
+export function mapWeatherCity({ name, url, region, country }: ApiSearchCityResult): WeatherCity {
+	return {
+		name,
+		url,
+		region,
+		country,
 	};
 }

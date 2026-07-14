@@ -27,3 +27,13 @@ export type WeatherLocation = {
 	region: string;
 	timezoneId: string;
 };
+
+export type WeatherCity = {
+	name: string;
+	region: string;
+	country: string;
+	/**
+	 * Can be used in the query for the request to get the exact location searched for
+	 */
+	url: string;
+};
