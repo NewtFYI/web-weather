@@ -1,3 +1,4 @@
+import localCurrentData from "../mock/jhb/current-mock.json";
 import type { ApiForecastResponse, FetchRequest } from "../types/api.ts";
 
 const API_BASE = "https://api.weatherapi.com/v1" as const;
@@ -9,7 +10,21 @@ const ApiMethodMap = {
 	history: "history.json",
 } as const;
 
+function fetchLocalData<TResponse>(method: string): TResponse {
+	if (method === ApiMethodMap.current) {
+		return localCurrentData as TResponse;
+	}
+
+	return null as TResponse;
+}
+
 async function fetchWithAuth<TResponse>(method: string, { queryParams }: FetchRequest): Promise<TResponse> {
+	// check if we should hit the actual API
+	const isProd = import.meta.env.VITE_IS_DEVELOPMENT !== "true";
+	if (!isProd) {
+		return fetchLocalData<TResponse>(method);
+	}
+
 	const queryString = new URLSearchParams({ key: import.meta.env.VITE_WEATHER_API_KEY ?? "", ...queryParams });
 	const response = await fetch(`${API_BASE}/${method}?${queryString}`);
 
