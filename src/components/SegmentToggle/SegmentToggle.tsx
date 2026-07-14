@@ -1,14 +1,16 @@
-interface SegmentedOption<T extends string> {
-	value: T;
-	label: string;
-}
+import type { ReactNode } from "react";
 
-interface SegmentedProps<T extends string> {
+type SegmentedOption<T extends string> = {
+	value: T;
+	label: ReactNode;
+};
+
+type SegmentedProps<T extends string> = {
 	options: SegmentedOption<T>[];
 	value: T;
 	onChange: (value: T) => void;
 	ariaLabel: string;
-}
+};
 
 function SegmentToggle<T extends string>({ options, value, onChange, ariaLabel }: SegmentedProps<T>) {
 	return (
