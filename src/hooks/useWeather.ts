@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import { loadCurrent } from "../api/client.ts";
 import type { WeatherState } from "../types/weather.ts";
+import { mapWeatherForecast } from "../utils/mapping.ts";
 
 export function useWeather(location: string) {
 	const [state, setState] = useState<WeatherState>({ status: "loading" });
@@ -20,7 +21,7 @@ export function useWeather(location: string) {
 			// TODO consider async await
 			.then((data) => {
 				if (alive) {
-					setState({ status: "ready", data });
+					setState({ status: "ready", data: mapWeatherForecast(data) });
 				}
 			})
 			.catch((err: unknown) => {
