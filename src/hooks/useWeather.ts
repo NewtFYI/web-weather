@@ -20,15 +20,7 @@ export function useWeather(location: string) {
 		})
 			// TODO consider async await
 			.then((data) => {
-				setTimeout(() => {
-					if (alive) {
-						if (refreshMarker > 1) {
-							setState({ status: "ready", data: mapWeatherForecast(data) });
-						} else {
-							setState({ status: "error", error: "Unauthorized" });
-						}
-					}
-				}, 2000);
+				setState({ status: "ready", data: mapWeatherForecast(data) });
 			})
 			.catch((err: unknown) => {
 				if (alive) {
