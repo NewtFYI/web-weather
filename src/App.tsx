@@ -31,7 +31,13 @@ export function App() {
 
 	return (
 		<div className="relative mx-auto flex min-h-screen max-w-270 flex-col pt-10 pb-10">
-			<LocationHeader location={location} day={activeDay} onCitySelected={onSelectCity} />
+			<LocationHeader
+				location={location}
+				day={activeDay}
+				onCitySelected={onSelectCity}
+				isOffToday={!isToday}
+				onBackToToday={() => setSelectedDate(today)}
+			/>
 			<Hero day={activeDay} unit={selectedUnit} onUnitChange={setSelectedUnit} />
 			<HourlyRail day={activeDay} unit={selectedUnit} isToday={isToday} />
 			<WeekRail days={days} today={today} selectedDate={activeDate} unit={selectedUnit} onSelect={setSelectedDate} />
