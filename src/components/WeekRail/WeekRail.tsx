@@ -48,7 +48,7 @@ function DayTile({ day, today, unit, selected, onSelect }: DayTileProps) {
 			</span>
 			<Icon size={26} strokeWidth={1.75} />
 			<span className="text-xl font-semibold tracking-tight text-slate-100">
-				<Temperature display={"value-degree"} unit={unit} value={summary.max} />
+				<Temperature display={"value-degree"} unit={unit} value={summary.avg} />
 			</span>
 			<span className="text-xs text-slate-400">
 				<b className="font-semibold text-slate-300">
@@ -77,7 +77,7 @@ export function WeekRail({ days, today, selectedDate, unit, onSelect }: WeekRail
 	return (
 		<section>
 			<h3 className="mt-4 mb-3 flex items-center gap-1 text-xs font-semibold tracking-wider text-slate-400 uppercase">
-				<CalendarRange size={14} /> This week
+				<CalendarRange size={14} /> 7-day period
 			</h3>
 			<div ref={railRef} className="fade-x-edges scrollbar-none relative -mx-6 flex gap-2 overflow-x-auto px-6 py-1">
 				{days.map((day) => (
