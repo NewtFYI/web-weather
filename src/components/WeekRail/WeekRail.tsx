@@ -29,8 +29,8 @@ function DayTile({ day, today, unit, selected, onSelect }: DayTileProps) {
 	const nowParts = getDateParts(now.toISOString());
 	const currentHour = day.hours.find((x) => getDateParts(x.time).hour === nowParts.hour);
 	let dayIconMarker: boolean | undefined;
-	if (isToday && currentHour?.isDay) {
-		dayIconMarker = currentHour.isDay;
+	if (isToday) {
+		dayIconMarker = currentHour?.isDay;
 	}
 	const Icon = mapConditionCodeToIcon(day.summary.condition.code, dayIconMarker);
 
