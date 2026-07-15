@@ -48,7 +48,7 @@ function DayTile({ day, today, unit, selected, onSelect }: DayTileProps) {
 			data-today={isToday || undefined}
 			aria-current={isToday ? "date" : undefined}
 			aria-pressed={selected}
-			className={`flex shrink-0 cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl px-2 py-4 transition-colors duration-200 ${buttonLookAndFeel}`}
+			className={`flex cursor-pointer flex-col items-center justify-center gap-2 rounded-2xl px-2 py-4 transition-colors duration-200 ${buttonLookAndFeel}`}
 		>
 			{isToday && <span className="text-base font-bold tracking-wider text-aqua-300 uppercase">Today</span>}
 			<span className={`text-sm font-semibold ${selected || isToday ? "text-aqua-200" : "text-slate-300"}`}>
