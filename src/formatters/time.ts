@@ -1,3 +1,37 @@
+function getDatePart(parts: Intl.DateTimeFormatPart[], type: Intl.DateTimeFormatPartTypes) {
+	return parts.find((p) => p.type === type)?.value ?? "0";
+}
+
+export function getDateParts(date: string) {
+	const jsDate = new Date(date);
+	const parts = new Intl.DateTimeFormat("en-CA", {
+		year: "numeric",
+		month: "2-digit",
+		day: "2-digit",
+		hour: "2-digit",
+		minute: "2-digit",
+		hourCycle: "h23",
+	}).formatToParts(jsDate);
+
+	const shortWeekdayPart = new Intl.DateTimeFormat("en-CA", {
+		weekday: "short",
+	}).formatToParts(jsDate);
+
+	const longWeekdayPart = new Intl.DateTimeFormat("en-CA", {
+		weekday: "long",
+	}).formatToParts(jsDate);
+
+	return {
+		year: Number(getDatePart(parts, "year")),
+		month: Number(getDatePart(parts, "month")),
+		day: Number(getDatePart(parts, "day")),
+		hour: Number(getDatePart(parts, "hour")),
+		minute: Number(getDatePart(parts, "minute")),
+		shortWeekday: getDatePart(shortWeekdayPart, "weekday"),
+		longWeekday: getDatePart(longWeekdayPart, "weekday"),
+	};
+}
+
 export function formatHour(time: string): string {
 	const formatter = Intl.DateTimeFormat("en", {
 		hourCycle: "h23",
