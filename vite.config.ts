@@ -11,7 +11,7 @@ export default defineConfig({
 		port: 2121,
 	},
 	test: {
-		environment: "jsdom",
+		environment: "happy-dom",
 		// Pin the timezone so time-dependent tests are deterministic
 		// Several components format and compare hours in LOCAL time via Intl.DateTimeFormat.
 		// Without a fixed TZ, "which cell is Now", depends on where the test runs.
