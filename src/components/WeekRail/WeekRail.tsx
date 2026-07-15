@@ -1,6 +1,7 @@
-import { CalendarRange, Cloudy } from "lucide-react";
+import { CalendarRange } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { dayKind, getDateParts } from "../../formatters/time.ts";
+import { mapConditionCodeToIcon } from "../../mappers/condition.ts";
 import type { TempUnit, WeatherDay } from "../../types/weather.ts";
 import { Temperature } from "../Temperature/Temperature.tsx";
 
@@ -24,7 +25,14 @@ type WeekRailProps = {
 function DayTile({ day, today, unit, selected, onSelect }: DayTileProps) {
 	const { summary } = day;
 	const isToday = dayKind(day.date, today) === "today";
-	const Icon = Cloudy;
+	const now = new Date();
+	const nowParts = getDateParts(now.toISOString());
+	const currentHour = day.hours.find((x) => getDateParts(x.time).hour === nowParts.hour);
+	let dayIconMarker: boolean | undefined;
+	if (isToday && currentHour?.isDay) {
+		dayIconMarker = currentHour.isDay;
+	}
+	const Icon = mapConditionCodeToIcon(day.summary.condition.code, dayIconMarker);
 
 	let buttonLookAndFeel: string;
 	if (isToday)
