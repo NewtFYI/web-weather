@@ -20,7 +20,6 @@ export function Hero({ day, current, unit, onUnitChange }: HeroProps) {
 					ariaLabel="Temperature units"
 					value={unit}
 					onChange={onUnitChange}
-					key={unit}
 					options={[
 						{
 							value: "C",

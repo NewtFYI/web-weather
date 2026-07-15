@@ -22,7 +22,7 @@ export function SegmentToggle<T extends string>({ options, value, onChange, aria
 		>
 			{options.map((o) => (
 				<button
-					key={value}
+					key={o.value}
 					type="button"
 					role="tab"
 					aria-selected={o.value === value}
