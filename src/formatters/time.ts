@@ -74,3 +74,23 @@ export function previousDates(from: string, count: number): string[] {
 	}
 	return dates;
 }
+
+const DAY_IN_MS = 24 * 60 * 60 * 1000;
+export type DayKind = "past" | "today" | "future";
+
+function utcDay(year: number, month: number, day: number) {
+	return Date.UTC(year, month - 1, day);
+}
+
+export function dayDifference(dateISO: string, todayISO: string): number {
+	const dateParts = getDateParts(dateISO);
+	const todayParts = getDateParts(todayISO);
+	return (utcDay(dateParts.year, dateParts.month, dateParts.day) - utcDay(todayParts.year, todayParts.month, todayParts.day)) / DAY_IN_MS;
+}
+
+export function dayKind(date: string, today: string): DayKind {
+	const offset = dayDifference(date, today);
+	if (offset < 0) return "past";
+	if (offset > 0) return "future";
+	return "today";
+}
