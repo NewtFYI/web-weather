@@ -1,20 +1,24 @@
-import type { TempUnit, WeatherDay, WeatherReading } from "../../types/weather.ts";
+import { getDateParts } from "../../formatters/time.ts";
+import type { TempUnit, WeatherDay } from "../../types/weather.ts";
 import { SegmentToggle } from "../SegmentToggle/SegmentToggle.tsx";
 import { Temperature } from "../Temperature/Temperature.tsx";
 
 type HeroProps = {
 	day: WeatherDay;
-	current: WeatherReading;
 	unit: TempUnit;
 	onUnitChange: (unit: TempUnit) => void;
 };
 
-export function Hero({ day, current, unit, onUnitChange }: HeroProps) {
+export function Hero({ day, unit, onUnitChange }: HeroProps) {
+	const now = new Date();
+	const nowParts = getDateParts(now.toISOString());
+	const currentDayHour = day.hours.find((x) => getDateParts(x.time).hour === nowParts.hour);
+
 	return (
 		<section className="flex flex-wrap items-start gap-4">
 			<div>
 				<div className="text-gradient text-8xl leading-tight font-light tracking-tight">
-					<Temperature value={current.temp} display="value-degree" unit={unit} isGradient={true} />
+					<Temperature value={currentDayHour?.temp ?? day.summary.avg} display="value-degree" unit={unit} isGradient={true} />
 				</div>
 				<SegmentToggle
 					ariaLabel="Temperature units"

@@ -24,7 +24,7 @@ export function App() {
 		return <LoadingRetry retry={weather.refresh} status={weather.status} error={weather.status === "error" ? weather.error : undefined} />;
 	}
 
-	const { current, location, days, today } = weather.data;
+	const { location, days, today } = weather.data;
 	const activeDate = selectedDate ?? today;
 	const activeDay = days.find((d) => d.date === activeDate) ?? days[0];
 	const isToday = activeDay.date === today;
@@ -32,7 +32,7 @@ export function App() {
 	return (
 		<div className="relative mx-auto flex min-h-screen max-w-270 flex-col pt-10 pb-10">
 			<LocationHeader location={location} day={activeDay} onCitySelected={onSelectCity} />
-			<Hero day={activeDay} current={current} unit={selectedUnit} onUnitChange={setSelectedUnit} />
+			<Hero day={activeDay} unit={selectedUnit} onUnitChange={setSelectedUnit} />
 			<HourlyRail day={activeDay} unit={selectedUnit} isToday={isToday} />
 			<WeekRail days={days} today={today} selectedDate={activeDate} unit={selectedUnit} onSelect={setSelectedDate} />
 			<footer className="mt-auto flex items-center gap-1 pt-2 text-xs text-slate-500">
