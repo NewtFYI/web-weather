@@ -1,5 +1,5 @@
 import { useEffect, useRef } from "react";
-import { formatHour, getDateParts } from "../../formatters/time.ts";
+import { dayKind, formatHour, getDateParts } from "../../formatters/time.ts";
 import { mapConditionCodeToIcon } from "../../mappers/condition.ts";
 import type { TempUnit, WeatherDay } from "../../types/weather.ts";
 import { Temperature } from "../Temperature/Temperature.tsx";
@@ -33,7 +33,15 @@ export function HourlyRail({ day, unit, isToday }: HourlyRailProps) {
 				const hourParts = getDateParts(h.time);
 				const nowParts = getDateParts(now.toISOString());
 				const isNow = isToday && hourParts.hour === nowParts.hour;
-				const isPast = isToday && hourParts.hour < nowParts.hour;
+				const typeOfDay = dayKind(h.time, now.toISOString());
+				let isPast = false;
+				if (isToday) {
+					isPast = hourParts.hour < nowParts.hour;
+				} else if (typeOfDay === "past") {
+					isPast = true;
+				} else if (typeOfDay === "future") {
+					isPast = false;
+				}
 				return (
 					<div
 						key={h.epoch}
