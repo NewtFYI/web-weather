@@ -87,7 +87,7 @@ export function WeekRail({ days, today, selectedDate, unit, onSelect }: WeekRail
 			<h3 className="mt-4 mb-3 flex items-center gap-1 text-xs font-semibold tracking-wider text-slate-400 uppercase">
 				<CalendarRange size={14} /> 7-day period
 			</h3>
-			<div ref={railRef} className="fade-x-edges scrollbar-none relative -mx-6 flex gap-2 overflow-x-auto px-6 py-1">
+			<div ref={railRef} className="scrollbar-none relative -mx-4 flex gap-2 overflow-x-auto px-6 py-1">
 				{days.map((day) => (
 					<DayTile
 						key={day.date}
