@@ -51,6 +51,7 @@ function mapDaySummary(day: ApiDay): WeatherDaySummary {
 	return {
 		min: mapTemp(day.mintemp_c, day.mintemp_f),
 		max: mapTemp(day.maxtemp_c, day.maxtemp_f),
+		avg: mapTemp(day.avgtemp_c, day.avgtemp_f),
 		condition: mapCondition(day.condition),
 		rainChance: day.daily_chance_of_rain,
 		rainWill: day.daily_will_it_rain === 1,

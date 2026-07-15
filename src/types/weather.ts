@@ -23,6 +23,7 @@ export type WeatherReading = {
 export type WeatherDaySummary = {
 	min: Temp;
 	max: Temp;
+	avg: Temp;
 	condition: WeatherCondition;
 	rainChance: number;
 	rainWill: boolean;
