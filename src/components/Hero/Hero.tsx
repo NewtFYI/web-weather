@@ -14,7 +14,7 @@ export function Hero({ day, current, unit, onUnitChange }: HeroProps) {
 		<section className="flex flex-wrap items-start gap-4">
 			<div>
 				<div className="text-gradient text-8xl leading-tight font-light tracking-tight">
-					<Temperature value={current.temp} display="value" unit={unit} />
+					<Temperature value={current.temp} display="value-degree" unit={unit} isGradient={true} />
 				</div>
 				<SegmentToggle
 					ariaLabel="Temperature units"
