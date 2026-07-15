@@ -27,7 +27,7 @@ export function HourlyRail({ day, unit, isToday }: HourlyRailProps) {
 	}, [isToday]);
 
 	return (
-		<div ref={railRef} className="scrollbar-thin-dark relative flex gap-2 overflow-x-auto pb-1 mt-4">
+		<div ref={railRef} className="scrollbar-thin-dark relative flex gap-2 overflow-x-auto pb-1 mt-4 mx-2.5">
 			{day.hours.map((h) => {
 				const ConditionIcon = mapConditionCodeToIcon(h.condition.code, h.isDay);
 				const hourParts = getDateParts(h.time);
