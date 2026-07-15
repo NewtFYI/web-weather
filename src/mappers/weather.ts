@@ -67,10 +67,12 @@ export function mapDay(forecastDay: ApiForecastDay): WeatherDay {
 }
 
 export function mapForecast(response: ApiForecastResponse): WeatherForecastData {
+	const days = response.forecast.forecastday.map(mapDay);
 	return {
 		location: mapLocation(response.location),
 		current: mapCurrent(response.current),
-		days: response.forecast.forecastday.map(mapDay),
+		today: days[0]?.date ?? response.location.localtime.slice(0, 10), // only get the date
+		days,
 	};
 }
 

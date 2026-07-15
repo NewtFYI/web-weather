@@ -47,6 +47,7 @@ export type WeatherLocation = {
 export type WeatherForecastData = {
 	location: WeatherLocation;
 	current: WeatherReading;
+	today: string;
 	days: WeatherDay[];
 };
 
