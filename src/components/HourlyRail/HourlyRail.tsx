@@ -1,6 +1,6 @@
-import { Cloudy } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { formatHour, getDateParts } from "../../formatters/time.ts";
+import { mapConditionCodeToIcon } from "../../mappers/condition.ts";
 import type { TempUnit, WeatherDay } from "../../types/weather.ts";
 import { Temperature } from "../Temperature/Temperature.tsx";
 
@@ -29,6 +29,7 @@ export function HourlyRail({ day, unit, isToday }: HourlyRailProps) {
 	return (
 		<div ref={railRef} className="scrollbar-thin-dark relative flex gap-2 overflow-x-auto pb-1 mt-4">
 			{day.hours.map((h) => {
+				const ConditionIcon = mapConditionCodeToIcon(h.condition.code, h.isDay);
 				const hourParts = getDateParts(h.time);
 				const nowParts = getDateParts(now.toISOString());
 				const isNow = isToday && hourParts.hour === nowParts.hour;
@@ -46,7 +47,7 @@ export function HourlyRail({ day, unit, isToday }: HourlyRailProps) {
 						<span className={`text-xs font-semibold ${isNow ? "text-aqua-300" : "text-slate-400"}`}>
 							{isNow ? "Now" : formatHour(h.time)}
 						</span>
-						<Cloudy size={20} className={"text-aqua-300"} />
+						<ConditionIcon size={20} className="text-aqua-300" />
 						<span className="text-base font-semibold text-slate-100">
 							<Temperature display={"value-degree"} unit={unit} value={h.temp} />
 						</span>
