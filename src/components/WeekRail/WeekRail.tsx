@@ -28,7 +28,7 @@ function DayTile({ day, today, unit, selected, onSelect }: DayTileProps) {
 
 	let buttonLookAndFeel: string;
 	if (isToday)
-		buttonLookAndFeel = `${selected ? "today-ring w-32 shadow-glow-aqua" : "w-28 border border-glass-line bg-glass backdrop-blur-sm hover:border-glass-line-strong"}`;
+		buttonLookAndFeel = `${selected ? "today-ring w-28 shadow-glow-aqua" : "w-28 border border-glass-line bg-glass backdrop-blur-sm hover:border-glass-line-strong"}`;
 	else if (selected) buttonLookAndFeel = "w-28 border border-aqua-400/55 bg-aqua-500/15 shadow-glow-aqua";
 	else buttonLookAndFeel = "w-28 border border-glass-line bg-glass backdrop-blur-sm hover:border-glass-line-strong";
 
