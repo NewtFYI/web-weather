@@ -100,3 +100,10 @@ body {
 	overflow-x: hidden;
 	padding-left: 1rem;
 }
+
+a {
+	@apply text-aqua-400 no-underline;
+}
+a:hover {
+	@apply text-aqua-300;
+}
