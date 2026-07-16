@@ -1,29 +1,31 @@
-# Web Weather App by CocoX
+# CocoX Weather
 
-This project was originally started from a brief given by SecuritEase; the brief can be found in the docs folder at [brief](docs/brief.md).
-The content of the deliverable and what's "left" out is based on this brief and the amount of time that remains.
+## About
+This is a web weather app which shows current conditions, a 3-day forecast, and 3-day history for a specified location, with day tiles that update the main display on click.
 
-A weather app built for as part of a technical assessment.
-It shows current conditions, a 3-day forecast, and 3-day history for a specified location, with day tiles that update the main display on click.
+## Brief
+This project was originally started as an assessment. If you'd like to see the details of the original assessment you can find them in the docs area @ [assessment](docs/assessment.md).
 
-The goal of this application is to be written within a week, while still working on normal day-to-day developer tasks.
-Items might be cut from the original deliverable, which is due EoD, July 15, 2026.
+The goal of this app was to be written within a week, while still working on normal day-to-day developer tasks.
 
-> This project may extend beyond this deadline, for a showcase on my personal projects which can be viewed at [newt.fyi/projects](https://newt.fyi/projects).
+> Once I have built a BFF to secure the API key, this project will be available on my personal projects showcase which can be viewed at [newt.fyi/projects](https://newt.fyi/projects).
 
 ## Setup
 
-1. Clone the repo and run `pnpm i` (or `npm install`, but `pnpm` is the recommended package manager).
-2. Copy `.env.example` to `.env` and add your WeatherAPI.com key:
-3. `pnpm dev` starts the app at `http://localhost:2121`.
-4. `pnpm build` produces a production build in `dist/`.
-5. `pnpm test` runs the test suite.
-
-Get a free key at [weatherapi.com](https://www.weatherapi.com/signup.aspx).
+1. Install node `24.18.0`; recommended with `fnm` (or it's relative, `nvm`).
+   1. The `.nvmrc` file defines the version that is required.
+2. Clone the repo and run `pnpm i` (or `npm install`, but `pnpm` is the recommended package manager).
+3. Copy `.env.example` to `.env` and add your WeatherAPI.com key:
+4. `pnpm run dev` starts the app at `http://localhost:2121`.
+5. `pnpm build` produces a production build in `dist/`.
+6. `pnpm run test` runs the test suite.
+7. `pnpm run coverage` generates a coverage report for the tests.
+8. `pnpm run preview` serves a production build locally. 
+9. Get a free key at [weatherapi.com](https://www.weatherapi.com/signup.aspx).
 
 ## Why WeatherAPI.com instead of WeatherStack
 
-The brief names WeatherStack's free tier as the data source,
+The original assessment names WeatherStack's free tier as the data source,
 and asks for a 3-day forecast plus 3-day history alongside current conditions.
 Those two requirements do not fit on WeatherStack's free plan.
 
@@ -38,7 +40,7 @@ Its Free plan allows 100,000 calls a month, a 3-day forecast, 1 day of historica
 and permits commercial use. (Source: [WeatherAPI Pricing](https://www.weatherapi.com/pricing.aspx))
 That's 1,000 times WeatherStack's free call allowance, from a single response shape instead of two.
 
-## Covering the extra 2 days of history
+### Covering the extra 2 days of history
 
 > ⚠️ UPDATE
 > After exploring the API a little, I see that the WeatherAPI.com allows you to get history for any day
@@ -47,51 +49,18 @@ That's 1,000 times WeatherStack's free call allowance, from a single response sh
 > But, because we are able to get history for a day, but just calling the api for that specific day, we'll always have all 3 days showing correctly from the start.
 > The thing that doesn't change, is that we will continue to cache history weather, since it's in the past, it can't change.
 
-~~WeatherAPI.com's free plan returns 1 day of history.
-The brief asks for 3, and paying for WeatherStack's Standard plan or a second API just to cover 2 extra days didn't seem feasible.
-Instead, the app builds its own trailing history:~~
-
-~~- Every time the app loads, it writes that day's current-weather reading to `IndexedDB`~~
-   ~~- Scope still needs defining on how this is stored~~
-~~- Day -1 always comes from WeatherAPI.com's `history.json` endpoint, so it's accurate from the first run.~~
-~~- Day -2 and day -3 come from the local cache, once the app has been opened on those days.~~
-~~- On a first run, or after clearing site data, day -2 and day -3 show an explicit "no data yet" state rather than a blank tile or an invented number.~~
-   ~~- This is a tradeoff, to prevent incurring costs on this project~~
-
 ## Mock data for development
 
-100,000 calls a month is generous, but restarting the dev server or refreshing the browser 
-while working on the UI adds up fast.
-For this reason, the app uses `mock-weather-data.json`
-(in the project root) which emulates the WeatherAPI.com's own response shape:
-`location`, `current`, `forecast.forecastday[]`.
+100,000 calls a month is generous, but restarting the dev server or refreshing the browser while working on the UI can add up fast.
+For this reason, the app uses some mock data, which can be found in `src/mock`.
+The mock data doesn't just emulate the WeatherAPI.com's response, it is a statically/manually pulled list of data.
 
-> ⚠️ 
-> The JSON file will contain history information in a structure that is defined once the app has been built and contains history information that is pulled from browser storage. 
+With `VITE_USE_MOCK_DATA=true`, `pnpm run dev` renders the app against the sample payloads in `src/mock/`. Search works too; try "port" or "durban".
 
-Set `VITE_USE_MOCK_DATA=true` in `.env` to load the fixture instead of calling the live API.
+## How it's put together
 
-Because the fixture matches the real response shape field for field,
-it also doubles as the schema for a possible future "load your own weather JSON" feature,
-letting someone see the app rendered with their own numbers instead of a live location.
-This is part of a stretch goal.
-
-## Design decisions and trade-offs
-
-As implementation is done, this will be populated with more items
-
-- WeatherStack was swapped for WeatherAPI.com for the pricing reasons above.
-
-### Items cut for time
-
-In order to ensure that we get all the core functionality in place, some items may be cut from the scope for time. These items will be listed here for easy visibilty, and to mark future improvements that may be introduced later (even after the assessment is submitted).
-
-- Item 1
-- Item 2
-
-## Testing
-
-Test runner and what's covered, will be provided in this section
+The full deliverable information of the assessment can be found in [deliverable.md](docs/deliverable.md).
+Check out this document for the rest of the documentation around design decisions, things that were cut, and future plans.
 
 ## Attribution
 
