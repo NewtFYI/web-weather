@@ -1,21 +1,19 @@
 import { previousDates } from "../formatters/time.ts";
 import { mapCity, mapForecast, mapHistoryDays } from "../mappers/weather.ts";
-import localHistory0710 from "../mock/jhb/2026-07-10.json";
-import localHistory0711 from "../mock/jhb/2026-07-11.json";
-import localHistory0712 from "../mock/jhb/2026-07-12.json";
-import localForecastData from "../mock/jhb/forecast.json";
-import localCityData from "../mock/search/cities.json";
+import { MockForecast } from "../mock/forecast.ts";
+import { MockHistoryDay1, MockHistoryDay2, MockHistoryDay3 } from "../mock/history.ts";
+import { MockSearch } from "../mock/search.ts";
 import {
-  type ApiForecastResponse,
-  type ApiHistoryResponse,
-  type ApiQueryRequest,
-  type ApiSearchCityResult,
-  type BaseFetchRequest,
-  type ForecastFetchRequest,
-  type HistoryFetchRequest,
-  mapBaseFetchToApiQuery,
-  mapFetchToApiQuery,
-  mapHistoryFetchToApiQuery,
+	type ApiForecastResponse,
+	type ApiHistoryResponse,
+	type ApiQueryRequest,
+	type ApiSearchCityResult,
+	type BaseFetchRequest,
+	type ForecastFetchRequest,
+	type HistoryFetchRequest,
+	mapBaseFetchToApiQuery,
+	mapFetchToApiQuery,
+	mapHistoryFetchToApiQuery,
 } from "../types/api.ts";
 import type { WeatherCity, WeatherDay, WeatherForecastData } from "../types/weather.ts";
 
@@ -24,30 +22,35 @@ const useMock = import.meta.env.VITE_USE_MOCK_DATA === "true";
 
 const HISTORY_DAYS = 3 as const;
 const FORECAST_DAYS = 4 as const;
+const oneDayAsMs = 1000 * 60 * 60 * 24;
 
 const apiMethodOptions = ["forecast.json", "search.json", "history.json"] as const;
 type ApiMethod = (typeof apiMethodOptions)[number];
 
-const localHistoryByDate: Record<string, unknown> = {
-	"2026-07-10": localHistory0710,
-	"2026-07-11": localHistory0711,
-	"2026-07-12": localHistory0712,
-};
-
 function fetchLocalData<TResponse>(method: ApiMethod, { q, dt }: ApiQueryRequest): TResponse {
 	switch (method) {
 		case "forecast.json": {
-			return localForecastData as TResponse;
+			return MockForecast as TResponse;
 		}
 		case "search.json": {
-			return localCityData.filter((city) => city.name.toLowerCase().includes(q.toLowerCase())).slice(0, 5) as TResponse;
+			return MockSearch.filter((city) => city.name.toLowerCase().includes(q.toLowerCase())).slice(0, 5) as TResponse;
 		}
 		case "history.json": {
-			const mock = dt ? localHistoryByDate[dt] : undefined;
-			if (!mock) {
-				throw new Error(`No history mock for ${dt ?? "(no date)"}`);
+			if (!dt) throw new Error("No history period provided");
+			const now = new Date();
+			const timeRequest = new Date(dt);
+			const diffInTime = now.getTime() - timeRequest.getTime();
+			const diffInDays = Math.round(diffInTime / oneDayAsMs);
+			switch (diffInDays) {
+				case 1:
+					return MockHistoryDay1 as TResponse;
+				case 2:
+					return MockHistoryDay2 as TResponse;
+				case 3:
+					return MockHistoryDay3 as TResponse;
+				default:
+					return MockHistoryDay1 as TResponse;
 			}
-			return mock as TResponse;
 		}
 		default:
 			throw new Error(`No local data for ${method}`);
@@ -101,26 +104,14 @@ export async function loadForecast(request: ForecastFetchRequest): Promise<Weath
 		return forecast;
 	}
 
-	let settled: PromiseSettledResult<WeatherDay[]>[];
-	if (useMock) {
-		settled = await Promise.allSettled(
-			previousDates("2026-07-13", HISTORY_DAYS).map((date) =>
-				fetchHistoryDay({
-					locationSearch: request.locationSearch,
-					historyDate: date,
-				}),
-			),
-		);
-	} else {
-		settled = await Promise.allSettled(
-			previousDates(today, HISTORY_DAYS).map((date) =>
-				fetchHistoryDay({
-					locationSearch: request.locationSearch,
-					historyDate: date,
-				}),
-			),
-		);
-	}
+	const settled = await Promise.allSettled(
+		previousDates(today, HISTORY_DAYS).map((date) =>
+			fetchHistoryDay({
+				locationSearch: request.locationSearch,
+				historyDate: date,
+			}),
+		),
+	);
 
 	const history = settled
 		.filter((promiseResult): promiseResult is PromiseFulfilledResult<WeatherDay[]> => promiseResult.status === "fulfilled")
