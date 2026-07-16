@@ -1,6 +1,6 @@
 # Deliverable
 
-## How I put the blocks together
+## How it's put together
 
 The `src/` folder is grouped by responsibility rather than by feature:
 
@@ -17,6 +17,40 @@ The hero temperature block went in first and was wired straight into the app.
 The loading and error state came out next, then a small `Separator` component to keep the markup readable.
 LocationHeader and CitySearch followed, then a `Temperature` component (see the degree symbol note below),
 then the hourly strip, then the multi-day rail, and finally the wiring that lets a selected day drive every section at once.
+
+## Why WeatherAPI.com instead of WeatherStack
+
+The original assessment names WeatherStack's free tier as the data source,
+and asks for a 3-day forecast plus 3-day history alongside current conditions.
+Those two requirements do not fit on WeatherStack's free plan.
+
+WeatherStack's Free plan gives real-time weather only, capped at 100 calls a month.
+Forecast data sits behind the Professional plan at \$49.99 a month.
+Historical data sits behind the Standard plan at \$9.99 a month.
+(Source: [WeatherStack Pricing](https://weatherstack.com/pricing), checked July 2026)
+
+Rather than pay for a plan or stitch together two providers for one app,
+I moved current weather, forecast, and history onto WeatherAPI.com.
+Its Free plan allows 100,000 calls a month, a 3-day forecast, 1 day of historical data,
+and permits commercial use. (Source: [WeatherAPI Pricing](https://www.weatherapi.com/pricing.aspx))
+That's 1,000 times WeatherStack's free call allowance, from a single response shape instead of two.
+
+### Covering the extra 2 days of history
+
+> ⚠️ UPDATE
+> After exploring the API a little, I see that the WeatherAPI.com allows you to get history for any day
+> The pricing page was a little confusing/misleading with this; and I'm still not exactly sure what they meant by only getting a single day's history.
+> It's possible that you can only get a single day of history at a time - which is likely what that item on the pricing page means.
+> But, because we are able to get history for a day, but just calling the api for that specific day, we'll always have all 3 days showing correctly from the start.
+> The thing that doesn't change, is that we will continue to cache history weather, since it's in the past, it can't change.
+
+## Mock data for development
+
+100,000 calls a month is generous, but restarting the dev server or refreshing the browser while working on the UI can add up fast.
+For this reason, the app uses some mock data, which can be found in `src/mock`.
+The mock data doesn't just emulate the WeatherAPI.com's response, it is a statically/manually pulled list of data.
+
+With `VITE_USE_MOCK_DATA=true`, `pnpm run dev` renders the app against the sample payloads in `src/mock/`. Search works too; try "port" or "durban".
 
 ## Design decisions and trade-offs
 
@@ -67,13 +101,12 @@ My chosen color palette (aqua, purple, slate), the glass surfaces and
 the glow shadows are all defined there as custom properties.
 I make use of `@utility` classes in the file to allow for applying styles to parts of the UI seamlessly, as Tailwind intends.
 
-**Using Claude to map WeatherAPI codes to Icons.**
+**Using code generation to map WeatherAPI codes to Icons.**
 This was a huge win for the style of the app. I asked Claude to help me put together a list of WeatherAPI codes (of weather conditions),
 for a mapping to Lucide icons. Why would I do this? The "image" provided by WeatherAPI is a `.png` file.
 This means that there is no control over its color or how it's displayed in the overall typography of the site.
 Having a code from their condition, allows a mapping from the condition type to a lucide available icon.
 This means that we can have our typography match the style even with the conditions. This was a huge win.
-
 
 ## Scope: what was cut, and why
 
