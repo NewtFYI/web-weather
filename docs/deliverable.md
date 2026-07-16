@@ -69,11 +69,21 @@ but a hot-reloading dev server fanning out history requests eats into that fast,
 and it means the app runs with zero setup for anyone reviewing it.
 The bundled sample is a real WeatherAPI payload, so mock and live exercise the same mappers and components.
 
+**Fetching state as a discriminated union.**
+`useWeather` models the request as one of three states:
+`loading`, `ready` (carrying the data) or `error` (carrying the message).
+Because the data only exists on the ready branch,
+the app can't reach for it before it's there, and the loading and error screens fall out of the same switch.
+It uses an `alive` flag to drop stale responses if the location changes mid-flight,
+and a small refresh counter to power the retry button.
+This is deliberately hand-rolled rather than reaching for a data-fetching library;
+for a single endpoint and one screen, the library would have been more surface than the problem needed.
+
 **History is fetched one day at a time.**
-The free tier rejects a date range on `history.json`, 
+The free tier appears to allow one history day per call rather than a date range,
 so past days are requested individually and merged with the forecast into a single sorted list.
 Those requests run through `Promise.allSettled`, so if a history day fails,
-the rail just shows fewer past tiles instead of the whole showing an error.
+the rail just shows fewer past tiles instead of the whole view showing an error.
 A shorter rail of actual weather is much better than no weather at all.
 
 **Custom degree symbol instead of the Unicode character.**
@@ -99,14 +109,19 @@ because no-one wants to sit and debug date and time, at any time of the day 🌚
 Styling is Tailwind v4, all theme information lives in a `@theme` block in `index.css`.
 My chosen color palette (aqua, purple, slate), the glass surfaces and 
 the glow shadows are all defined there as custom properties.
-I make use of `@utility` classes in the file to allow for applying styles to parts of the UI seamlessly, as Tailwind intends.
+I make use of `@utility` in the file to register my own custom pieces
+(the gradient text, the degree mark, the Today ring, the custom scrollbar)
+as first-class Tailwind utilities.
+The reason for `@utility` over a plain CSS class is that Tailwind then treats them like its own,
+so they slot into the utility layer and get variant support (`hover:`, `md:` and so on) for free.
+This means they behave consistently with the rest of the utility-driven markup.
 
-**Using code generation to map WeatherAPI codes to Icons.**
+**Mapping WeatherAPI condition codes to Lucide icons.**
 This was a huge win for the style of the app. I asked Claude to help me put together a list of WeatherAPI codes (of weather conditions),
 for a mapping to Lucide icons. Why would I do this? The "image" provided by WeatherAPI is a `.png` file.
 This means that there is no control over its color or how it's displayed in the overall typography of the site.
 Having a code from their condition, allows a mapping from the condition type to a lucide available icon.
-This means that we can have our typography match the style even with the conditions. This was a huge win.
+This means that we can have our typography match the style even with the conditions.
 
 ## Scope: what was cut, and why
 
@@ -118,10 +133,10 @@ keep it clean rather than spread the same hours across every idea from my origin
 
 The initial design (the idea that I planned out over the weekend) went wider than what's here.
 
-### What Did I Cut?
+### What I cut
 
-The items that were cut from my original design are still planned improvements;
-and you may seem some remnants of it in the code, like a reference to `Scene` information.
+The items that were cut from my original design are still planned improvements,
+and you may see some remnants of them in the code, like a reference to `Scene` information.
 To fit the timeline, the following items were dropped:
 
 - **Full-bleed animated scene backgrounds.**
@@ -142,12 +157,26 @@ Having received this as an assignment and getting stuck into it,
 it really has turned into a personal side project;
 which I've really enjoyed working on.
 So the cut features are on my backlog.
-And this is a real backlog, not those "put it on the backlog" meme's >.<
+And this is a real backlog, not those "put it on the backlog" memes >.<
+
+### Known limitation: "Now" in a different timezone
+
+The "Now" marker and the dimmed past hours currently derive the current time from the browser (`new Date()`),
+then compare that hour against the forecast hours, which are in the *location's* local time.
+When your browser and the city you're viewing share a timezone, this is correct.
+When they don't, `"Now"` lands on the wrong cell: for example, viewing Hawaii from South Africa,
+highlights the hour that's current here, not there.
+
+The planned fix is a `useLocalNow` hook that holds the current time in state on a 30-second tick,
+resolved in the location's timezone via `tz_id`, with every section reading from it.
+That single source is also what makes the live clock and the sun-position arc possible,
+which is why they were cut together. This is the visible edge of that cut.
+I caught it checking Hawaii's weather.
 
 ### A note on caching and service workers
 
 The original plan included a caching layer, using `localStorage` and `IndexedDB` for TTL-based API-call management,
-a daily snapshot to bridge the free tier's 1-day history limit,
+a daily snapshot to avoid re-fetching history days we've already seen,
 as well as a service worker for offline support.
 That didn't make it in.
 
