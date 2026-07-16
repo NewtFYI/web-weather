@@ -67,6 +67,14 @@ My chosen color palette (aqua, purple, slate), the glass surfaces and
 the glow shadows are all defined there as custom properties.
 I make use of `@utility` classes in the file to allow for applying styles to parts of the UI seamlessly, as Tailwind intends.
 
+**Using Claude to map WeatherAPI codes to Icons.**
+This was a huge win for the style of the app. I asked Claude to help me put together a list of WeatherAPI codes (of weather conditions),
+for a mapping to Lucide icons. Why would I do this? The "image" provided by WeatherAPI is a `.png` file.
+This means that there is no control over its color or how it's displayed in the overall typography of the site.
+Having a code from their condition, allows a mapping from the condition type to a lucide available icon.
+This means that we can have our typography match the style even with the conditions. This was a huge win.
+
+
 ## Scope: what was cut, and why
 
 The assessment asked for a production-ready front-end that displays weather,
